@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "TravelTime",
+  "version": "0.1",
+  "description": "Show travel time to your workplace from homes on TradeMe",
+  "content_scripts": [
+    {
+      // Change 'matches' attribute to load content
+      // script only in pages you want to.
+      "matches": ["http://www.trademe.co.nz/property/*"],
+      "css": ["style.css"],
+      "js": ["jquery-1.11.1.min.js", "contentscript.js"]
+    }
+  ],
+  "permissions": [
+    "http://maps.googleapis.com/"
+  ]
+}
+
