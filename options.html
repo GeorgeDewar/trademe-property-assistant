@@ -1,0 +1,47 @@
+<html>
+<head>
+  <title>Options for TravelTime</title>
+  <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="defaults.js"></script>
+  <script type="text/javascript" src="options.js"></script>
+</head>
+<body>
+<h1>Options for TravelTime</h1>
+
+<form>
+  <fieldset>
+    <legend>My Workplace</legend>
+    <textarea id="workplace" rows="4" cols="80"></textarea>
+  </fieldset>
+
+  <fieldset>
+    <legend>Mode of Transport:</legend>
+    <label><input type="radio" name="mode" value="driving"> Driving</label>
+    <label><input type="radio" name="mode" value="walking"> Walking</label>
+    <label><input type="radio" name="mode" value="bicycling"> Bicycle</label>
+    <label><input type="radio" name="mode" value="transit"> Public Transit</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Timing</legend>
+    <label><input type="radio" name="time_type" value="departure_time"> Leave at</label>
+    <label><input type="radio" name="time_type" value="arrival_time"> Arrive at</label>
+    <label><input type="time" id="time" /></label>
+    <label>Day of Week:
+      <select id="day">
+        <option value="1">Monday</option>
+        <option value="2">Tuesday</option>
+        <option value="3">Wednesday</option>
+        <option value="4">Thursday</option>
+        <option value="5">Friday</option>
+        <option value="6">Saturday</option>
+        <option value="7">Sunday</option>
+      </select>
+    </label>
+  </fieldset>
+
+  <button type="button" id="save">Save</button>
+</form>
+
+</body>
+</html>

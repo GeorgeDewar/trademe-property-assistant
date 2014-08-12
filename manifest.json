@@ -9,11 +9,12 @@
       // script only in pages you want to.
       "matches": ["http://www.trademe.co.nz/property/*"],
       "css": ["style.css"],
-      "js": ["jquery-1.11.1.min.js", "contentscript.js"]
+      "js": ["jquery-1.11.1.min.js", "defaults.js", "contentscript.js"]
     }
   ],
   "permissions": [
-    "http://maps.googleapis.com/"
-  ]
+    "http://maps.googleapis.com/",
+    "storage"
+  ],
+  "options_page": "options.html"
 }
-

@@ -1,27 +1,36 @@
 $(function(){
-    // Quit if there in no address
-    //if(!mapState.userEnteredLocation) return;
+    chrome.storage.sync.get(defaults, function(settings){
 
-    //var address = mapState.userEnteredLocation + ', ' + mapState.structuredLocation;
-    var address = $('table#ListingAttributes > tbody > tr > th')
-        .filter(function(ix, el) { return el.innerHTML.trim() == 'Location:' })
-        .siblings('td').html().trim().replace(/<br>/g, ', ');
-    if(!address) return;
+        var address = $('table#ListingAttributes > tbody > tr > th')
+            .filter(function(ix, el) { return el.innerHTML.trim() == 'Location:' })
+            .siblings('td').html().trim().replace(/<br>/g, ', ');
 
-    var workplace = 'Wellington Railway Station';
-    var mode = 'transit';
-    var arrival_time = '1407832200';
+        // Quit if there in no address
+        if(!address) return;
 
-    var url = 'http://maps.googleapis.com/maps/api/directions/json?origin='
-        + address + '&destination=' + workplace + '&mode=' + mode + '&arrival_time=' + arrival_time;
+        var workplace = settings.workplace;
+        var mode = settings.mode;
+        var time_type = settings.time_type;
+        var time = settings.time;
+        var day = settings.day;
 
-    console.log(url);
+        var url = 'http://maps.googleapis.com/maps/api/directions/json?origin='
+            + address + '&destination=' + workplace + '&mode=' + mode;
+        if(mode == 'transit') {
+            today = new Date();
+            today.setDate(today.getDate() + ((today.getDay() + 7) % day));
+            today.setHours(time.split(':')[0]);
+            today.setMinutes(time.split(':')[1]);
+            url += '&' + time_type + '=' + Math.round(today.getTime() / 1000);
+        }
 
-    $.get(url, function(data){
-        console.log(data);
-        var duration = data.routes[0].legs[0].duration.text;
-        $('table#ListingAttributes > tbody').append('<tr><th>Travel Time:</th><td>' + duration + '</td></tr>');
+        console.log(url);
+
+        $.get(url, function(data){
+            console.log(data);
+            var duration = data.routes[0].legs[0].duration.text;
+            $('table#ListingAttributes > tbody').append('<tr><th>Travel Time:</th><td>' + duration + '</td></tr>');
+        });
+
     });
-
-
 });
