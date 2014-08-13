@@ -28,8 +28,14 @@ $(function(){
 
         $.get(url, function(data){
             console.log(data);
-            var duration = data.routes[0].legs[0].duration.text;
-            $('table#ListingAttributes > tbody').append('<tr><th>Travel Time:</th><td>' + duration + '</td></tr>');
+            var route = data.routes[0];
+            var duration = route.legs[0].duration.text;
+            var modeText = '';
+            if(mode == 'transit'){
+                var vehicle = route.legs[0].steps.filter(function(x) { return x.travel_mode == 'TRANSIT' })[0].transit_details.line.vehicle;
+                modeText = ' by ' + vehicle.name.toLowerCase();
+            }
+            $('table#ListingAttributes > tbody').append('<tr><th>Travel Time:</th><td>' + duration + modeText + '</td></tr>');
         });
 
     });
