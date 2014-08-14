@@ -1,6 +1,10 @@
 $(function(){
     chrome.storage.sync.get(defaults, function(settings){
 
+        var DIR_FLAGS = {
+            transit: 'r', walking: 'w', driving: 'd', bicycling: 'b'
+        }
+
         var address = $('table#ListingAttributes > tbody > tr > th')
             .filter(function(ix, el) { return el.innerHTML.trim() == 'Location:' })
             .siblings('td').html().trim().replace(/<br>/g, ', ');
@@ -35,7 +39,9 @@ $(function(){
                 var vehicle = route.legs[0].steps.filter(function(x) { return x.travel_mode == 'TRANSIT' })[0].transit_details.line.vehicle;
                 modeText = ' by ' + vehicle.name.toLowerCase();
             }
-            $('table#ListingAttributes > tbody').append('<tr><th>Travel Time:</th><td>' + duration + modeText + '</td></tr>');
+            $('table#ListingAttributes > tbody').append('<tr><th>Travel Time:</th><td>' +
+                '<a href="http://maps.google.com/?saddr=' + address + '&daddr=' + workplace + '&dirflg=' + DIR_FLAGS[mode] + '">' +
+                duration + modeText + '</a></td></tr>');
         });
 
     });
