@@ -40,7 +40,8 @@ $(function(){
                 modeText = ' by ' + vehicle.name.toLowerCase();
             }
             $('table#ListingAttributes > tbody').append('<tr><th>Travel Time:</th><td>' +
-                '<a href="http://maps.google.com/?saddr=' + address + '&daddr=' + workplace + '&dirflg=' + DIR_FLAGS[mode] + '">' +
+                '<a href="http://maps.google.com/?saddr=' + address + '&daddr=' + workplace + '&dirflg=' +
+                DIR_FLAGS[mode] + '" target="_blank">' +
                 duration + modeText + '</a></td></tr>');
         });
 
