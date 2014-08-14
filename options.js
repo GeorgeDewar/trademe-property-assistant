@@ -1,10 +1,4 @@
 $(function(){
-    function set(key, val){
-        chrome.storage.sync.set({key: val}, function() {
-            console.log("Settings saved");
-        });
-    }
-
     chrome.storage.sync.get(defaults, function(data){
         console.log(data);
 
@@ -20,13 +14,16 @@ $(function(){
         $('#day').val(get('day'));
     });
 
-
     $('#save').click(function(){
-       set('workplace', $('#workplace').val());
-       set('mode', $('input[name="mode"]:checked').val());
-       set('time_type', $('input[name="time_type"]:checked').val());
-       set('time', $('#time').val());
-       set('day', $('#day').val());
+        chrome.storage.sync.set({
+            workplace: $('#workplace').val(),
+            mode: $('input[name="mode"]:checked').val(),
+            time_type: $('input[name="time_type"]:checked').val(),
+            time: $('#time').val(),
+            day: $('#day').val()
+        }, function() {
+            console.log("Settings saved");
+        });
     });
 
 });
