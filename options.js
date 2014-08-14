@@ -26,4 +26,13 @@ $(function(){
         });
     });
 
+    $('input[name="mode"]').click(function(){
+        if($('input[name="mode"]:checked').val() == 'transit'){
+            $('#timing').show();
+        }
+        else{
+            $('#timing').hide();
+        }
+    });
+
 });
