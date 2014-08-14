@@ -35,6 +35,7 @@ chrome.storage.sync.get(defaults, function(settings){
         console.log(data);
         var route = data.routes[0];
         var duration = route.legs[0].duration.text;
+        var arrivalTime = ', arriving at ' + route.legs[0].arrival_time.text;
         var modeText = '';
         if(mode == 'transit'){
             var vehicle = route.legs[0].steps.filter(function(x) { return x.travel_mode == 'TRANSIT' })[0].transit_details.line.vehicle;
@@ -43,7 +44,7 @@ chrome.storage.sync.get(defaults, function(settings){
         $('#traveltime').html(
             '<a href="http://maps.google.com/?saddr=' + address + '&daddr=' + workplace + '&dirflg=' +
             DIR_FLAGS[mode] + '" target="_blank">' +
-            duration + modeText + '</a>');
+            duration + modeText + arrivalTime + '</a>');
     });
 
 });
