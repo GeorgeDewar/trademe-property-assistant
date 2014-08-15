@@ -11,3 +11,14 @@ transport. TravelTime will then give you the timing for a public transport journ
 to your workplace, arriving at 9am the following Monday (it generally wouldn't matter which weekday you choose, but
 you might work on a Saturday or Sunday which may have a different timetable).
 
+## Installation
+
+I haven't put this up on the Chrome app store, because I haven't bothered to design an icon for it (which is a requirement)! You can still easily install it, though. 
+
+* Download the repositry as a zip file, and extract it into a location of your choice
+* Go to the [Extensions page](chrome://extensions/) of Chrome's settings
+* Tick the "Developer Mode" box
+* Click "Load Unpacked Extension"
+* Navigate to the directory where you unpacked the extension, and click Open
+ 
+Let me know if you do in fact give it a go and find it useful.
