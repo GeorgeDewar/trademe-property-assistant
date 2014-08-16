@@ -7,7 +7,7 @@
     {
       // Change 'matches' attribute to load content
       // script only in pages you want to.
-      "matches": ["http://www.trademe.co.nz/property/*"],
+      "matches": ["http://www.trademe.co.nz/*"],
       "css": ["style.css"],
       "js": ["jquery-1.11.1.min.js", "defaults.js", "contentscript.js"],
       "run_at": "document_end"
