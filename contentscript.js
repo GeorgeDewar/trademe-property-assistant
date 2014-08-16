@@ -20,7 +20,7 @@ chrome.storage.sync.get(defaults, function(settings){
     var day = settings.day;
 
     var url = 'http://maps.googleapis.com/maps/api/directions/json?origin='
-        + address + '&destination=' + workplace + '&mode=' + mode;
+        + address + '&destination=' + workplace + '&mode=' + mode + '&alternatives=true';
     if(mode == 'transit') {
         today = new Date();
         today.setDate(today.getDate() + ((today.getDay() + 7) % day));
