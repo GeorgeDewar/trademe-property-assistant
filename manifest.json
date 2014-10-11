@@ -10,6 +10,7 @@
          "jquery-1.11.1.min.js",
          "defaults.js",
          "components/traveltime.js",
+         "components/ratinginfo.js",
          "contentscript.js"
       ],
       "run_at": "document_end"
@@ -17,6 +18,7 @@
   ],
   "permissions": [
     "http://maps.googleapis.com/",
+    "http://www.watchmystreet.co.nz/",
     "storage"
   ],
   "options_page": "options.html"
