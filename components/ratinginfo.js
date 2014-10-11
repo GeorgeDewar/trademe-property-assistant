@@ -31,30 +31,40 @@ function getRatingInfo(address, settings){
             $('#links').html('<a href="' + dataUrl + '">Watch My Street</a>');
 
             $.get(dataUrl, function(data){
-                page = $(data);
+                var page = $(data);
 
-                valuation = page.find('ul.valuation li:first em').html().replace(' K', ',000');
-                rvBox = findOrCreateRow('Rateable value (RV):');
-                if(rvBox.html().length > 0){
-                    // Compare user-provided value with official value
-                    if(rvBox.html().trim() == valuation){
-                        rvBox.append(' TICK [W]');
-                    }
-                    else {
-                        rvBox.append(' ! [W] - Watch My Street says ' + valuation);
-                    }
-                }
-                else{
-                    // Add the field
-                    rvBox.html(valuation + ' [W]');
-                }
+                var valuation = page.find('ul.valuation li:first em').html().replace(' K', ',000');
+                createOrCompareField('Rateable value (RV):', valuation);
+
+                var floorArea = findWatchMyStreetAttribute(page, 'Floor Area');
+                createOrCompareField('Floor area:', floorArea);
+
+                var landArea = findWatchMyStreetAttribute(page, 'Land Area');
+                createOrCompareField('Land area:', landArea);
+
+                var buildingAge = findWatchMyStreetAttribute(page, 'Building Age');
+                createOrCompareField('Building age:', buildingAge);
 
             });
         }
     });
+}
 
-
-
+function createOrCompareField(title, value){
+    var field = findOrCreateRow(title);
+    if(field.html().length > 0){
+        // Compare user-provided value with official value
+        if(field.text().trim() == value){
+            field.append(' TICK [W]');
+        }
+        else {
+            field.append(' ! [W] - Watch My Street says ' + value);
+        }
+    }
+    else{
+        // Add the field
+        field.html(value + ' [W]');
+    }
 }
 
 function findOrCreateRow(title){
@@ -64,4 +74,9 @@ function findOrCreateRow(title){
         row = getAttributesRowByTitle(title);
     }
     return row.siblings('td');
+}
+
+function findWatchMyStreetAttribute(page, title){
+    return page.find('.details > table > tbody > tr > th')
+        .filter(function(ix, el) { return el.innerHTML.trim() == title }).siblings('td').text().trim();
 }
