@@ -1,5 +1,5 @@
-var WATCH_MY_STREET_ICON = '<img src="' + chrome.extension.getURL('img/watch-my-street.png') + '" width="20" />';
-var TICK_ICON = '<img src="' + chrome.extension.getURL('img/tick2.gif') + '" width="20" />';
+var WATCH_MY_STREET_ICON = '<img src="' + chrome.extension.getURL('img/watch-my-street-green.png') + '" width="20" title="This information has been retrieved from Watch My Street" />';
+var TICK_ICON = '<img src="' + chrome.extension.getURL('img/tick2.gif') + '" width="20" title="3rd party information matches what has been provided" />';
 
 function getRatingInfo(address, settings){
     $('table#ListingAttributes > tbody').append('<tr><th>Additional Information:</th><td id="links">Loading...</td></tr>');
