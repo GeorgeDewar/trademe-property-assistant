@@ -34,19 +34,19 @@ function getRatingInfo(address, settings){
                 page = $(data);
 
                 valuation = page.find('ul.valuation li:first em').html().replace(' K', ',000');
-                rvBox = getAttributesRowByTitle('Rateable value (RV):');
-                if(rvBox.length == 1){
+                rvBox = findOrCreateRow('Rateable value (RV):');
+                if(rvBox.html().length > 0){
                     // Compare user-provided value with official value
-                    if(rvBox.siblings('td').html().trim() == valuation){
-                        rvBox.siblings('td').append(' TICK [W]');
+                    if(rvBox.html().trim() == valuation){
+                        rvBox.append(' TICK [W]');
                     }
                     else {
-                        rvBox.siblings('td').append(' ! [W] - Watch My Street says ' + valuation);
+                        rvBox.append(' ! [W] - Watch My Street says ' + valuation);
                     }
                 }
                 else{
                     // Add the field
-                    $('table#ListingAttributes > tbody').append('<tr><th>Rateable value (RV):</th><td>' + valuation + ' [W]</td></tr>');
+                    rvBox.html(valuation + ' [W]');
                 }
 
             });
@@ -55,4 +55,13 @@ function getRatingInfo(address, settings){
 
 
 
+}
+
+function findOrCreateRow(title){
+    var row = getAttributesRowByTitle(title);
+    if(row.length == 0){
+        $('table#ListingAttributes > tbody').append('<tr><th>' + title + '</th><td></td></tr>');
+        row = getAttributesRowByTitle(title);
+    }
+    return row.siblings('td');
 }
