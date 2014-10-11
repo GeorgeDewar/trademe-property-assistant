@@ -1,5 +1,3 @@
-$('table#ListingAttributes > tbody').append('<tr><th>Travel Time:</th><td id="traveltime">Loading...</td></tr>');
-
 chrome.storage.sync.get(defaults, function(settings){
 
     var DIR_FLAGS = {
@@ -12,6 +10,8 @@ chrome.storage.sync.get(defaults, function(settings){
 
     // Quit if there in no address
     if(!address) return;
+
+    $('table#ListingAttributes > tbody').append('<tr><th>Travel Time:</th><td id="traveltime">Loading...</td></tr>');
 
     var workplace = settings.workplace;
     var mode = settings.mode;
