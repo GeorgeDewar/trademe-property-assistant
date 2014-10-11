@@ -1,3 +1,6 @@
+var WATCH_MY_STREET_ICON = '<img src="' + chrome.extension.getURL('img/watch-my-street.png') + '" width="20" />';
+var TICK_ICON = '<img src="' + chrome.extension.getURL('img/tick2.gif') + '" width="20" />';
+
 function getRatingInfo(address, settings){
     $('table#ListingAttributes > tbody').append('<tr><th>Additional Information:</th><td id="links">Loading...</td></tr>');
 
@@ -55,15 +58,15 @@ function createOrCompareField(title, value){
     if(field.html().length > 0){
         // Compare user-provided value with official value
         if(field.text().trim() == value){
-            field.append(' TICK [W]');
+            field.append(' ' + TICK_ICON + ' ' + WATCH_MY_STREET_ICON);
         }
         else {
-            field.append(' ! [W] - Watch My Street says ' + value);
+            field.append(' ! ' + WATCH_MY_STREET_ICON + ' - Watch My Street says ' + value);
         }
     }
     else{
         // Add the field
-        field.html(value + ' [W]');
+        field.html(value + ' ' + WATCH_MY_STREET_ICON);
     }
 }
 

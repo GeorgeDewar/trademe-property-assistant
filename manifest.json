@@ -21,5 +21,8 @@
     "http://www.watchmystreet.co.nz/",
     "storage"
   ],
-  "options_page": "options.html"
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    "img/*"
+  ]
 }
