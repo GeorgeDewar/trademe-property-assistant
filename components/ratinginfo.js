@@ -1,6 +1,5 @@
 function getRatingInfo(address, settings){
-    $('table#ListingAttributes > tbody').append('<tr><th>Rating Info:</th><td id="ratinginfo">Loading...</td></tr>');
-    $('table#ListingAttributes > tbody').append('<tr><th>Links:</th><td id="links">Loading...</td></tr>');
+    $('table#ListingAttributes > tbody').append('<tr><th>Additional Information:</th><td id="links">Loading...</td></tr>');
 
     // 'Floor Area:'
     // 'Land Area:'
@@ -34,11 +33,21 @@ function getRatingInfo(address, settings){
             $.get(dataUrl, function(data){
                 page = $(data);
 
-                valuation = page.find('ul.valuation li:first em').html();
+                valuation = page.find('ul.valuation li:first em').html().replace(' K', ',000');
                 rvBox = getAttributesRowByTitle('Rateable value (RV):');
-                console.log(rvBox);
-
-                $('#ratinginfo').html(valuation);
+                if(rvBox.length == 1){
+                    // Compare user-provided value with official value
+                    if(rvBox.siblings('td').html().trim() == valuation){
+                        rvBox.siblings('td').append(' TICK [W]');
+                    }
+                    else {
+                        rvBox.siblings('td').append(' ! [W] - Watch My Street says ' + valuation);
+                    }
+                }
+                else{
+                    // Add the field
+                    $('table#ListingAttributes > tbody').append('<tr><th>Rateable value (RV):</th><td>' + valuation + ' [W]</td></tr>');
+                }
 
             });
         }
