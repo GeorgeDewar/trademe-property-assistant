@@ -6,7 +6,12 @@
   "content_scripts": [
     {
       "matches": ["http://www.trademe.co.nz/*"],
-      "js": ["jquery-1.11.1.min.js", "defaults.js", "contentscript.js"],
+      "js": [
+         "jquery-1.11.1.min.js",
+         "defaults.js",
+         "components/traveltime.js",
+         "contentscript.js"
+      ],
       "run_at": "document_end"
     }
   ],
