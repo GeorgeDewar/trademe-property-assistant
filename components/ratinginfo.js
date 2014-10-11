@@ -2,6 +2,13 @@ function getRatingInfo(address, settings){
     $('table#ListingAttributes > tbody').append('<tr><th>Rating Info:</th><td id="ratinginfo">Loading...</td></tr>');
     $('table#ListingAttributes > tbody').append('<tr><th>Links:</th><td id="links">Loading...</td></tr>');
 
+    // 'Floor Area:'
+    // 'Land Area:'
+    // 'Rateable value (RV):'
+
+    // Plan: If it's not there, add it (and say)
+    // If it is, verify it
+
     // Watch My Street
     var lookupUrl = 'http://www.watchmystreet.co.nz/cities.json?q=' + address;
     console.log(lookupUrl);
@@ -28,6 +35,9 @@ function getRatingInfo(address, settings){
                 page = $(data);
 
                 valuation = page.find('ul.valuation li:first em').html();
+                rvBox = getAttributesRowByTitle('Rateable value (RV):');
+                console.log(rvBox);
+
                 $('#ratinginfo').html(valuation);
 
             });

@@ -1,7 +1,6 @@
 chrome.storage.sync.get(defaults, function(settings){
 
-    var address = $('table#ListingAttributes > tbody > tr > th')
-        .filter(function(ix, el) { return el.innerHTML.trim() == 'Location:' })
+    var address = getAttributesRowByTitle('Location:')
         .siblings('td').html().trim().replace(/<br>/g, ', ');
 
     // Quit if there in no address
@@ -38,4 +37,9 @@ function retrieveWindowVariables(variables) {
     $("#tmpScript").remove();
 
     return ret;
+}
+
+function getAttributesRowByTitle(title){
+    return $('table#ListingAttributes > tbody > tr > th')
+        .filter(function(ix, el) { return el.innerHTML.trim() == title })
 }
