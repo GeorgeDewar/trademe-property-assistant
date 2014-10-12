@@ -24,5 +24,6 @@
   "options_page": "options.html",
   "web_accessible_resources": [
     "img/*"
-  ]
+  ],
+  "icons": { "128": "img/icon-128.png" }
 }
