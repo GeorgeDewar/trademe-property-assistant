@@ -34,6 +34,7 @@ function getRatingInfo(address, settings){
             $('#links').html('<a href="' + dataUrl + '">Watch My Street</a>');
 
             $.get(dataUrl, function(data){
+                data = data.replace(/<img\b[^>]*>/ig, '');
                 var page = $(data);
 
                 var valuation = page.find('ul.valuation li:first em').html().replace(' K', ',000');
