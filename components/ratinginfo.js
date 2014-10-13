@@ -1,12 +1,10 @@
 var WATCH_MY_STREET_ICON = '<img src="' + chrome.extension.getURL('img/watch-my-street-green.png') + '" width="20" valign="middle" title="This information has been retrieved from Watch My Street" />';
 var TICK_ICON = '<img src="' + chrome.extension.getURL('img/tick2.gif') + '" width="20" valign="middle" title="3rd party information matches what has been provided" />';
 
+var order = ['Property type:', 'Building age:', 'Floor area:', 'Land area:', 'Rateable value (RV):', 'Price'];
+
 function getRatingInfo(address, settings){
     $('table#ListingAttributes > tbody').append('<tr><th>Additional Information:</th><td id="links">Loading...</td></tr>');
-
-    // 'Floor Area:'
-    // 'Land Area:'
-    // 'Rateable value (RV):'
 
     // Plan: If it's not there, add it (and say)
     // If it is, verify it
@@ -74,10 +72,23 @@ function createOrCompareField(title, value){
 function findOrCreateRow(title){
     var row = getAttributesRowByTitle(title);
     if(row.length == 0){
-        $('table#ListingAttributes > tbody').append('<tr><th>' + title + '</th><td></td></tr>');
+        createRow(title);
         row = getAttributesRowByTitle(title);
     }
     return row.siblings('td');
+}
+
+function createRow(title){
+    var position = order.indexOf(title);
+    for(var i = position - 1; i >= 0; i--){
+        console.log('' + i + ' ' + order[i]);
+        if(getAttributesRowByTitle(order[i]).length > 0){
+            $('<tr><th>' + title + '</th><td></td></tr>').insertAfter(getAttributesRowByTitle(order[i]).parent());
+            return;
+        }
+    }
+    console.log('Failed to find suitable position to insert ' + title);
+    $('table#ListingAttributes > tbody').append('<tr><th>' + title + '</th><td></td></tr>');
 }
 
 function findWatchMyStreetAttribute(page, title){
