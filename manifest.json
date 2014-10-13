@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "TradeMe Property Assistant",
-  "version": "0.1",
+  "version": "0.2",
   "description": "Show travel time to your workplace, rating information and more when you look at property on TradeMe",
   "content_scripts": [
     {
