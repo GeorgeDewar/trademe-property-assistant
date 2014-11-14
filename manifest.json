@@ -18,7 +18,7 @@
   ],
   "permissions": [
     "http://maps.googleapis.com/",
-    "http://www.watchmystreet.co.nz/",
+    "http://rating.dewar.co.nz/",
     "storage"
   ],
   "options_page": "options.html",

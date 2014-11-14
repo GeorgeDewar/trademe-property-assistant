@@ -3,51 +3,41 @@ var TICK_ICON = '<img src="' + chrome.extension.getURL('img/tick2.gif') + '" wid
 
 var order = ['Property type:', 'Building age:', 'Floor area:', 'Land area:', 'Rateable value (RV):', 'Price'];
 
-function getRatingInfo(address, settings){
+function getRatingInfo(address, suburb, city, settings){
     $('table#ListingAttributes > tbody').append('<tr><th>Additional Information:</th><td id="links">Loading...</td></tr>');
 
     // Plan: If it's not there, add it (and say)
     // If it is, verify it
 
     // Watch My Street
-    var lookupUrl = 'http://www.watchmystreet.co.nz/cities.json?q=' + address;
+    var lookupUrl = 'http://rating.dewar.co.nz/search?address=' + address + '&suburb=' + suburb + '&city=' + city;
     console.log(lookupUrl);
     $.get(lookupUrl, function(data){
         console.log(data);
-        if(data.length == 0){
-            $('#ratinginfo').html('Property not found');
-            $('#links').html('');
-            return;
-        }
-        else if(data.length > 1){
-            $('#ratinginfo').html('Multiple matches found');
-            $('#links').html('');
+        if(data.error){
+            var errorText;
+            switch(data.error){
+                case 'region_not_supported':
+                    errorText = 'Region not supported';
+                    break;
+                case 'property_not_found':
+                    errorText = 'Property not found';
+                    break;
+                case 'multiple_results':
+                    errorText = 'Multiple properties found';
+                    break;
+            }
+            $('#links').html(errorText);
             return;
         }
         else{
-            path = data[0].metadata.path;
-            dataUrl = 'http://www.watchmystreet.co.nz' + path;
-            console.log(dataUrl);
+            $('#links').html('<a href="' + data.sourceUrl + '">' + data.source_name + '</a>');
 
-            $('#links').html('<a href="' + dataUrl + '">Watch My Street</a>');
+            if(data.valuation) createOrCompareField('Rateable value (RV):', data.valuation);
+            if(data.floor_area) createOrCompareField('Floor area:', data.floor_area + 'm2');
+            if(data.land_area) createOrCompareField('Land area:', data.land_area + 'm2');
+            if(data.building_age) createOrCompareField('Building age:', data.building_age);
 
-            $.get(dataUrl, function(data){
-                data = data.replace(/<img\b[^>]*>/ig, '');
-                var page = $(data);
-
-                var valuation = page.find('ul.valuation li:first em').html().replace(' K', ',000');
-                createOrCompareField('Rateable value (RV):', valuation);
-
-                var floorArea = findWatchMyStreetAttribute(page, 'Floor Area');
-                createOrCompareField('Floor area:', floorArea);
-
-                var landArea = findWatchMyStreetAttribute(page, 'Land Area');
-                createOrCompareField('Land area:', landArea);
-
-                var buildingAge = findWatchMyStreetAttribute(page, 'Building Age');
-                createOrCompareField('Building age:', buildingAge);
-
-            });
         }
     });
 }
