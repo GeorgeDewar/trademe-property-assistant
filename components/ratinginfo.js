@@ -33,13 +33,17 @@ function getRatingInfo(address, suburb, city, settings){
         else{
             $('#links').html('<a href="' + data.sourceUrl + '">' + data.source_name + '</a>');
 
-            if(data.valuation) createOrCompareField('Rateable value (RV):', data.valuation);
-            if(data.floor_area) createOrCompareField('Floor area:', data.floor_area + 'm2');
-            if(data.land_area) createOrCompareField('Land area:', data.land_area + 'm2');
-            if(data.building_age) createOrCompareField('Building age:', data.building_age);
+            if(data.valuation !== undefined) createOrCompareField('Rateable value (RV):', toCurrency(data.valuation));
+            if(data.floor_area !== undefined) createOrCompareField('Floor area:', data.floor_area + 'm2');
+            if(data.land_area !== undefined) createOrCompareField('Land area:', data.land_area + 'm2');
+            if(data.building_age !== undefined) createOrCompareField('Building age:', data.building_age);
 
         }
     });
+}
+
+function toCurrency(amount){
+    return amount.toLocaleString("en-NZ", {style: "currency", currency: "USD"})
 }
 
 function createOrCompareField(title, value){
