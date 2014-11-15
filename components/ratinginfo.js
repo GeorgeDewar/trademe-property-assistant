@@ -2,14 +2,15 @@ var TICK_ICON = '<img src="' + chrome.extension.getURL('img/tick2.gif') + '" wid
 
 var order = ['Property type:', 'Building age:', 'Floor area:', 'Land area:', 'Rateable value (RV):', 'Price'];
 
+var API_URL = 'http://localhost:4567';
+
 function getRatingInfo(address, suburb, city, settings){
     $('table#ListingAttributes > tbody').append('<tr><th>Additional Information:</th><td id="links">Loading...</td></tr>');
 
     // Plan: If it's not there, add it (and say)
     // If it is, verify it
 
-    // Watch My Street
-    var lookupUrl = 'http://rating.dewar.co.nz/search?address=' + address + '&suburb=' + suburb + '&city=' + city;
+    var lookupUrl = API_URL + '/search?address=' + address + '&suburb=' + suburb + '&city=' + city;
     console.log(lookupUrl);
     $.get(lookupUrl, function(data){
         console.log(data);
@@ -34,7 +35,7 @@ function getRatingInfo(address, suburb, city, settings){
 
             var source = {
                 name: data.source_name,
-                iconUrl: 'http://rating.dewar.co.nz' + data.icon
+                iconUrl: API_URL + data.icon
             }
 
             if(data.valuation !== undefined) createOrCompareField(source, 'Rateable value (RV):', toCurrency(data.valuation));
