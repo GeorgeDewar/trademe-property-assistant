@@ -19,6 +19,7 @@
   "permissions": [
     "http://maps.googleapis.com/",
     "http://rating.dewar.co.nz/",
+    "http://localhost:4567/",
     "storage"
   ],
   "options_page": "options.html",
