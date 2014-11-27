@@ -15,7 +15,7 @@ function getTravelTime(address, settings){
         + address + '&destination=' + workplace + '&mode=' + mode + '&alternatives=true';
     if(mode == 'transit') {
         today = new Date();
-        today.setDate(today.getDate() + ((today.getDay() + 7) % day));
+        today.setDate(today.getDate() + ((day - today.getDay() + 7) % 7));
         today.setHours(time.split(':')[0]);
         today.setMinutes(time.split(':')[1]);
         url += '&' + time_type + '=' + Math.round(today.getTime() / 1000);
