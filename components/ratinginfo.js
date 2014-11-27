@@ -2,7 +2,7 @@ var TICK_ICON = '<img src="' + chrome.extension.getURL('img/tick2.gif') + '" wid
 
 var order = ['Property type:', 'Building age:', 'Floor area:', 'Land area:', 'Rateable value (RV):', 'Price'];
 
-var API_URL = 'http://localhost:4567';
+var API_URL = 'http://rating.dewar.co.nz';
 
 function getRatingInfo(address, suburb, city, settings){
     $('table#ListingAttributes > tbody').append('<tr><th>Additional Information:</th><td id="links">Loading...</td></tr>');
