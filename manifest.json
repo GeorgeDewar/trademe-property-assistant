@@ -5,7 +5,7 @@
   "description": "Show travel time to your workplace, rating information and more when you look at property on TradeMe",
   "content_scripts": [
     {
-      "matches": ["http://www.trademe.co.nz/*"],
+      "matches": ["https://www.trademe.co.nz/*"],
       "js": [
          "jquery-1.11.1.min.js",
          "defaults.js",
