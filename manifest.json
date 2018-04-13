@@ -10,7 +10,6 @@
          "jquery-1.11.1.min.js",
          "defaults.js",
          "components/traveltime.js",
-         "components/ratinginfo.js",
          "contentscript.js"
       ],
       "run_at": "document_end"

@@ -10,7 +10,6 @@ chrome.storage.sync.get(defaults, function(settings){
 
     var windowVariables = retrieveWindowVariables(['propertyAddress', 'propertySuburb'])
 
-    getRatingInfo(windowVariables.propertyAddress + ' ' + windowVariables.propertySuburb, settings);
 
 });
 
