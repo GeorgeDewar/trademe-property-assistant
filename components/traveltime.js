@@ -21,25 +21,29 @@ function getTravelTime(address, settings){
         url += '&' + time_type + '=' + Math.round(today.getTime() / 1000);
     }
 
-    console.log(url);
-
     $.get(url, function(data){
-        console.log(data);
-        var routes = data.routes.map(function(route){
-            var duration = route.legs[0].duration.text;
-            var arrivalTime = '';
-            var modeText = '';
-            if(mode == 'transit'){
-                var vehicle = route.legs[0].steps.filter(function(x) { return x.travel_mode == 'TRANSIT' })[0].transit_details.line.vehicle;
-                modeText = ' by ' + vehicle.name.toLowerCase();
-                arrivalTime = ', arriving at ' + route.legs[0].arrival_time.text;
-            }
-            return duration + modeText + arrivalTime;
-        });
+        try {
+            var routes = data.routes.map(function(route){
+                var duration = route.legs[0].duration.text;
+                var arrivalTime = '';
+                var modeText = '';
+                if(mode == 'transit'){
+                    var vehicle = route.legs[0].steps.filter(function(x) { return x.travel_mode == 'TRANSIT' })[0].transit_details.line.vehicle;
+                    modeText = ' by ' + vehicle.name.toLowerCase();
+                    arrivalTime = ', arriving at ' + route.legs[0].arrival_time.text;
+                }
+                return duration + modeText + arrivalTime;
+            });
 
-        $('#traveltime').html(
-            '<a href="http://maps.google.com/?saddr=' + address + '&daddr=' + workplace + '&dirflg=' +
-                DIR_FLAGS[mode] + '" target="_blank">' +
-                routes.join('<br />') + '</a>');
+            $('#traveltime').html(
+                '<a href="http://maps.google.com/?saddr=' + address + '&daddr=' + workplace + '&dirflg=' +
+                    DIR_FLAGS[mode] + '" target="_blank">' +
+                    routes.join('<br />') + '</a>');
+        }
+        catch(e) {
+            console.log('Data:', data);
+            console.error(e);
+            $('#traveltime').html('Could not compute travel times');
+        }
     });
 }
