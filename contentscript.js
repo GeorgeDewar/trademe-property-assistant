@@ -6,11 +6,13 @@ chrome.storage.sync.get(defaults, function(settings){
     // Quit if there in no address
     if(!address) return;
 
-    getTravelTime(address, settings);
+    var windowVariables = retrieveWindowVariables(['propertyAddress', 'propertySuburb',
+        'dataLayer'])
+    var dataLayer = windowVariables.dataLayer[0];
+    var safeAddress = [windowVariables.propertyAddress, windowVariables.propertySuburb,
+        dataLayer.propertyDistrict].join(', ');
 
-    var windowVariables = retrieveWindowVariables(['propertyAddress', 'propertySuburb'])
-
-
+    getTravelTime(safeAddress, settings);
 });
 
 function retrieveWindowVariables(variables) {
@@ -19,7 +21,8 @@ function retrieveWindowVariables(variables) {
     var scriptContent = "";
     for (var i = 0; i < variables.length; i++) {
         var currVariable = variables[i];
-        scriptContent += "if (typeof " + currVariable + " !== 'undefined') $('body').attr('tmp_" + currVariable + "', " + currVariable + ");\n"
+        scriptContent += "if (typeof " + currVariable + " !== 'undefined') $('body').attr('tmp_" +
+            currVariable + "', JSON.stringify(" + currVariable + "));\n"
     }
 
     var script = document.createElement('script');
@@ -29,7 +32,8 @@ function retrieveWindowVariables(variables) {
 
     for (var i = 0; i < variables.length; i++) {
         var currVariable = variables[i];
-        ret[currVariable] = $("body").attr("tmp_" + currVariable);
+        raw = $("body").attr("tmp_" + currVariable);
+        ret[currVariable] = JSON.parse(raw);
         $("body").removeAttr("tmp_" + currVariable);
     }
 
